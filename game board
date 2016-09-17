@@ -1,0 +1,39 @@
+
+c.beginPath();
+for(var canvasX = 200; canvasX < 600; canvasX += 200){
+  c.moveTo(canvasX,0);
+  c.lineTo(canvasX, 600);
+} 
+c.stroke(); 
+c.closePath();
+
+c.beginPath();
+for(var canvasY = 200; canvasY < 600; canvasY += 200){
+  c.moveTo(0, canvasY);
+  c.lineTo(600, canvasY);
+} 
+c.stroke(); 
+c.closePath();
+
+var clear = function(){
+  turnCounter = 0;
+  diag1 = [], diag2 = [],
+  col1 = [], col2 = [], col3 = [], 
+  row1 = [], row2 = [], row3 = [];
+  c.clearRect(0,0,canvas.width,canvas.height);
+};
+
+var redraw = function(){
+  turn = 'X';
+  c.strokeStyle = 'black';
+  c.lineWidth = 1;
+  c.beginPath();
+  for(var canvasX=200; canvasX<600; canvasX+=200){
+    c.moveTo(canvasX,0);
+    c.lineTo(canvasX, 600);
+  } c.stroke(); c.closePath();
+  for(var canvasY=200; canvasY<600; canvasY+=200){
+    c.moveTo(0, canvasY);
+    c.lineTo(600, canvasY);
+  } c.stroke(); c.closePath();
+};
