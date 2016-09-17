@@ -1,0 +1,93 @@
+var switchTurns = function(){
+  if( turn === 'X'){ turn = 'O';}
+  else{ turn = 'X' }
+};
+
+var drawWinLine = function(startX, startY, endX, endY){
+  c.beginPath();
+  c.strokeStyle = 'green';
+  c.lineWidth = 15;
+  c.moveTo(startX, startY);
+  c.lineTo(endX, endY);
+  c.stroke(); c.closePath();
+  // something about the animation of the line is messing up how it clears; 
+  // the line will not clear on clearRect() and will influence any new lines drawn.. 
+  // problem with beginPath()/closePath() somewhere?  Tried many placements of them, no luck so far
+  /*var amount = 0;
+  setInterval(function(){
+    amount += 0.05;
+    if( amount > 1 ){
+      amount = 1;
+    };
+    c.strokeStyle = 'green';
+    c.lineWidth = 15;
+    c.moveTo(startX, startY);
+    c.lineTo( startX + (endX - startX) * amount, startY + (endY - startY) * amount );
+    c.stroke();
+  }, 30);
+  c.closePath();*/
+  endGame();
+};
+
+var checkForWinCondition = function(){
+   if( col1.threeInARow() ){
+     winConditionMet = true;
+     winner = col1[0].toUpperCase();
+     drawWinLine(100, 0, 100, 600);
+   }
+   else if( col2.threeInARow() ){
+     winConditionMet = true;
+     winner = col2[0].toUpperCase();
+     drawWinLine(300, 0, 300, 600);
+   }
+   else if( col3.threeInARow() ){
+     winConditionMet = true;
+     winner = col3[0].toUpperCase();
+     drawWinLine(500, 0, 500, 600);
+   }
+   else if( row1.threeInARow() ){
+     winConditionMet = true;
+     winner = row1[0].toUpperCase();
+     drawWinLine(0, 100, 600, 100);
+   }
+   else if( row2.threeInARow() ){
+     winConditionMet = true;
+     winner = row2[0].toUpperCase();
+     drawWinLine(0, 290, 600, 290);
+   }
+   else if( row3.threeInARow() ){
+     winConditionMet = true;
+     winner = row3[0].toUpperCase();
+     drawWinLine(0, 500, 600, 500);
+   }
+   else if( diag1.threeInARow() ){
+     winConditionMet = true;
+     winner = diag1[0].toUpperCase();
+     drawWinLine (0, 0, 600, 600);
+   }
+   else if( diag2.threeInARow() ){
+     winConditionMet = true;
+     winner = diag2[0].toUpperCase();
+     drawWinLine (0, 600, 600, 0);
+   }
+   else if( turnCounter === 9 ){
+     winConditionMet = false; 
+     endGame();
+   }
+};
+
+var endGame = function(){
+  var delay = 500;
+  setTimeout(function(){
+    if( turnCounter === 9 && winConditionMet === false ){
+      var tieConf = confirm("It's a draw, nice effort. New game?");
+      if( tieConf === true ){ clear(); redraw(); }
+    }
+    if( winConditionMet ){ 
+      var winConf = confirm( winner + ' is the winner! New game?');
+      if( winConf === true ){ clear(); redraw(); }
+    };   
+  }, delay); 
+}
+
+
